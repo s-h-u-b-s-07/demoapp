@@ -29,6 +29,7 @@ jobs:
       - name: Scripts
         run: |
           docker build -t deploy .
+          docker run -it -p 3000:3000 deploy
           docker login -u shub07 -p 01be5aeb-e1d9-489a-ad34-1e518357d59e
           docker tag deploy shub07/test
           docker push shub07/test
