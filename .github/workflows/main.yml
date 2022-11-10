@@ -29,6 +29,6 @@ jobs:
       - name: Scripts
         run: |
           docker build -t deploy .
-          docker login -u shub07 -p dckr_pat_iHZM8dupoIdina3o_yy4pvm0L6A
-          docker tag deploy shub07/devopskt
-          docker push shub07/devopskt:v1
+          docker login -u hareeshgq -p dckr_pat_qL7vR6pTfDTSZqwbg4E653eAKdk
+          docker tag deploy hareeshgq/devopskt_1
+          docker push hareeshgq/devopskt_1:v1
