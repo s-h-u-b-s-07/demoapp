@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 
 app.get('/', function(req,res){
-        res.send("Hello team..!");
+        res.send("Hello everyone..!");
 });
 
 server.listen(3000, function(){
