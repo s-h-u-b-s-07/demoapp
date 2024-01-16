@@ -15,13 +15,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.event.before }}
         fetch-depth: 0  # Fetch the full commit history
 
     - name: Check Commit Message
       run: |
         pattern="^\[.*-[0-9]+\] .+"
-        commit_message=$(git log --format=%B -n 1)
+        commit_message=$(git log --format=%B -n 1 ${{ github.event.before || github.sha }})
 
         echo "Commit message: $commit_message"
         echo "Pattern: $pattern"
