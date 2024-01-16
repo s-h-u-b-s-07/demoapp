@@ -1,0 +1,23 @@
+name: Commit Message Check
+
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
+
+jobs:
+  commit-message-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check Commit Message
+      run: |
+        pattern="^\[.*-[0-9]+\] .+"
+        commit_message=$(git log --format=%B -n 1 ${{ github.event.before }}..${{ github.sha }})
+
+        if [[ ! $commit_message =~ $pattern ]]; then
+          echo "Error: Invalid commit message. Please follow the expected pattern."
+          exit 1
+        fi
