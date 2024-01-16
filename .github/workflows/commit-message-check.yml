@@ -12,12 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.before }}
+        fetch-depth: 0  # Fetch the full commit history
+
     - name: Check Commit Message
       run: |
         pattern="^\[.*-[0-9]+\] .+"
-        commit_message=$(git log --format=%B -n 1 ${{ github.event.before }}..${{ github.sha }})
+        commit_message=$(git log --format=%B -n 1)
 
         if [[ ! $commit_message =~ $pattern ]]; then
-          echo "Error: Invalid commit message. Please follow the expected pattern."
+          echo "Error: Invalid commit message. Please follow the expected pattern: [<Project type>-<ticket no.>] <commit message>"
+          echo "For Example : [JIRA-1234] updated example file"
           exit 1
         fi
