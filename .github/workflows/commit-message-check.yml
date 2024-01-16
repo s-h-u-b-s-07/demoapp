@@ -23,6 +23,10 @@ jobs:
         pattern="^\[.*-[0-9]+\] .+"
         commit_message=$(git log --format=%B -n 1)
 
+        echo "Commit message: $commit_message"
+        echo "Pattern: $pattern"
+        echo "Match: $([[ $commit_message =~ $pattern ]] && echo "true" || echo "false")"
+
         if [[ ! $commit_message =~ $pattern ]]; then
           echo "Error: Invalid commit message. Please follow the expected pattern: [<Project type>-<ticket no.>] <commit message>"
           echo "For Example : [JIRA-1234] updated example file"
