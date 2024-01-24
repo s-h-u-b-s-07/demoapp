@@ -17,20 +17,17 @@ jobs:
       with:
         fetch-depth: 0  # Fetch the full commit history
 
-    - name: Check Commit Message
+    - name: Check Pull Request Title
       run: |
         pattern="^\[.*-[0-9]+\] .+"
-        commit_title=$(git log --format=%B -n 1 ${{ github.event.before || github.sha }} | head -n 1)
+        pr_title=${{ github.event.pull_request.title }}
 
-        echo "Commit title: $commit_title"
+        echo "Pull Request title: $pr_title"
         echo "Pattern: $pattern"
-        echo "Match: $([[ $commit_title =~ $pattern ]] && echo "true" || echo "false")"
+        echo "Match: $([[ $pr_title =~ $pattern ]] && echo "true" || echo "false")"
 
-        if [[ "$commit_title" == "Merge"* ]]; then
-          echo "Info: Skipping commit message check for merge commit."
-        elif [[ ! $commit_title =~ $pattern ]]; then
-          echo "Error: Invalid commit message. Please follow the expected pattern: [<Project type>-<ticket no.>] <commit message>"
-          echo "For Example: [JIRA-1234] updated example file"
+        if [[ ! $pr_title =~ $pattern ]]; then
+          echo "Error: Invalid pull request title. Please follow the expected pattern: [<Project type>-<ticket no.>] <pull request title>"
+          echo "For Example: [JIRA-1234] Update README"
           exit 1
         fi
-
