@@ -20,7 +20,7 @@ jobs:
     - name: Check Commit Message
       run: |
         pattern="^\[.*-[0-9]+\] .+"
-        commit_title=$(git log --format=%s -n 1 ${{ github.event.before || github.sha }})
+        commit_title=$(git log --format=%B -n 1 ${{ github.event.before || github.sha }} | head -n 1)
 
         echo "Commit title: $commit_title"
         echo "Pattern: $pattern"
@@ -33,3 +33,4 @@ jobs:
           echo "For Example: [JIRA-1234] updated example file"
           exit 1
         fi
+
