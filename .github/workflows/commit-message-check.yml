@@ -20,7 +20,7 @@ jobs:
     - name: Check Pull Request Title
       run: |
         pattern="^\[.*-[0-9]+\] .+"
-        pr_title=${{ github.event.pull_request.title }}
+        pr_title="${{ github.event.pull_request.title }}"
 
         echo "Pull Request title: $pr_title"
         echo "Pattern: $pattern"
